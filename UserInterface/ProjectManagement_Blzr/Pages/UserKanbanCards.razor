@@ -1,0 +1,26 @@
+﻿@page "/userkanbans"
+
+
+<SfKanban TValue="KanbanCardDto" KeyField="Status" AllowDragAndDrop="true">
+    <SfDataManager Url="api/Kanban" 
+    Adaptor="@Syncfusion.Blazor.Adaptors.WebApiAdaptor"></SfDataManager>
+    <KanbanColumns>
+        @foreach (Syncfusion.Blazor.Kanban.ColumnModel item in columnData)
+        {
+            <KanbanColumn HeaderText="@item.HeaderText" KeyField="@item.KeyField"></KanbanColumn>
+        }
+    </KanbanColumns>
+    <KanbanCardSettings HeaderField="Id" ContentField="Summary"></KanbanCardSettings>
+    <KanbanEvents TValue="KanbanCardDto" DialogOpen="@((args) => { args.Cancel = false; })"></KanbanEvents>
+</SfKanban>
+
+@code 
+{
+    private List<Syncfusion.Blazor.Kanban.ColumnModel> columnData = new List<Syncfusion.Blazor.Kanban.ColumnModel>() {
+        new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "To Do", KeyField= new List<string>() { "Open" } },
+        new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "In Progress", KeyField= new List<string>() { "InProgress" } },
+        new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "Testing", KeyField= new List<string>() { "Testing" } },
+        new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "Done", KeyField=new List<string>() { "Close" } }
+    };
+
+}
