@@ -9,39 +9,39 @@
 </SfToast>
 
 <div class="m-2 p-2">
-    <SfGantt @ref="Gantt" TValue="ProjectDto" Height="850px" Width="1400px" WorkUnit="WorkUnit.Hour"
-             ContextMenuItems="@contextMenuItems" Toolbar="Toolbaritems">
-        <SfDataManager Url="api/Project" Adaptor="Adaptors.WebApiAdaptor" CrossDomain="false"></SfDataManager>
-        <GanttTaskFields Id="ProjectId" Name="TaskName" StartDate="StartDate" EndDate="EndDate"
-                         Duration="Duration" Progress="Progress" ParentID="ParentId" ResourceInfo="ProjectResources">
-        </GanttTaskFields>
-        <GanttEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" AllowTaskbarEditing="true"
-                           Mode="Syncfusion.Blazor.Gantt.EditMode.Dialog"></GanttEditSettings>
-        <GanttResourceFields Resources="@ResourceCollection" Id="ResourceId" Name="ResourceName" Unit="Unit" Group="Group"
-                             TResources="ProjectResourceDto"></GanttResourceFields>
-        <GanttLabelSettings RightLabel="ProjectResources" TValue="ProjectDto"></GanttLabelSettings>
+    <SfGantt @ref="Gantt" TValue="ProjectDto" Height="850px" Width="1400px" WorkUnit="WorkUnit.Hour" HighlightWeekends
+              ContextMenuItems="@contextMenuItems" Toolbar="Toolbaritems">
+         <SfDataManager Url="api/Project" Adaptor="Adaptors.WebApiAdaptor" CrossDomain="false"></SfDataManager>
+         <GanttTaskFields Id="ProjectId" Name="TaskName" StartDate="StartDate" EndDate="EndDate"
+                          Duration="Duration" Progress="Progress" ParentID="ParentId" ResourceInfo="ProjectResources">
+         </GanttTaskFields>
+         <GanttEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" AllowTaskbarEditing="true"
+                            Mode="Syncfusion.Blazor.Gantt.EditMode.Dialog"></GanttEditSettings>
+         <GanttResourceFields Resources="@ResourceCollection" Id="ResourceId" Name="ResourceName" Unit="Unit" Group="Group"
+                              TResources="ProjectResourceDto"></GanttResourceFields>
+         <GanttLabelSettings RightLabel="ProjectResources" TValue="ProjectDto"></GanttLabelSettings>
 
-        <GanttEvents TValue="ProjectDto" OnActionFailure="ActionFailure"
-                     ContextMenuOpen="OnContextMenuOpen" ContextMenuItemClicked=ContextMenuItemClickedHandler></GanttEvents>
-    </SfGantt>
-</div>
+         <GanttEvents TValue="ProjectDto" OnActionFailure="ActionFailure" OnToolbarClick="ToolbarClickHandler"
+                      ContextMenuOpen="OnContextMenuOpen" ContextMenuItemClicked=ContextMenuItemClickedHandler></GanttEvents>
+     </SfGantt>
+ </div>
 
-@* Create Kanban Card Dialog *@
-<SfDialog Width="500px" Target="#target" ShowCloseIcon="false" IsModal="true"
-          AllowDragging="true" @bind-Visible="@AddKanbanIsVisible">
-    <DialogAnimationSettings Effect="@AnimationEffect" Duration=500 />
-    <DialogTemplates>
-        <Header>
-            <div class="container">
-                <SfMessage CssClass="custom" Severity="MessageSeverity.Info">Create a Kanban Card From Task</SfMessage>
-            </div>
-        </Header>
-        <Content>
-            <div class="container">
-                <EditForm Model="@newKanbanCard">
-                    <DataAnnotationsValidator />
-                    <div>
-                        <SfTextBox Placeholder='Task' Readonly FloatLabelType='@FloatLabelType.Auto'
+ @* Create Kanban Card Dialog *@
+ <SfDialog Width="500px" Target="#target" ShowCloseIcon="false" IsModal="true"
+           AllowDragging="true" @bind-Visible="@AddKanbanIsVisible">
+     <DialogAnimationSettings Effect="@AnimationEffect" Duration=500 />
+     <DialogTemplates>
+         <Header>
+             <div class="container">
+                 <SfMessage CssClass="custom" Severity="MessageSeverity.Info">Create a Kanban Card From Task</SfMessage>
+             </div>
+         </Header>
+         <Content>
+             <div class="container">
+                 <EditForm Model="@newKanbanCard">
+                     <DataAnnotationsValidator />
+                     <div>
+                         <SfTextBox Placeholder='Task' Readonly FloatLabelType='@FloatLabelType.Auto'
                          @bind-Value="@KanbanTaskName" CssClass="d-flex"></SfTextBox>
                      </div>
                      <div>
@@ -77,24 +77,44 @@
      </DialogTemplates>
  </SfDialog>
 
-@* Create New Project Dialog *@
- <SfDialog Height="75%" Width="435px" Target="#target" ShowCloseIcon="false" IsModal="true"
+ @* Create New Project Dialog *@
+ <SfDialog Height="auto" Width="500px" Target="#target" ShowCloseIcon="false" IsModal="true"
            AllowDragging="true" @bind-Visible="@AddProjectIsVisible">
      <DialogAnimationSettings Effect="@AnimationEffect" Duration=500 />
      <DialogTemplates>
          <Header>
-             <div id="template" title="Nancy" class="e-icon-settings">Nancy</div>
+             <div class="container">
+                 <SfMessage CssClass="custom" Severity="MessageSeverity.Info">Create a Main Project</SfMessage>
+             </div>
          </Header>
          <Content>
-             <div class="dialogContent">
-                 <span class="dialogText">@DialogText</span>
+             <div class="container">
+                 <EditForm Model="@newMainProject">
+                     <DataAnnotationsValidator />
+                     <div>
+                         <SfTextBox Placeholder='Project' FloatLabelType='@FloatLabelType.Auto'
+                         @bind-Value="@MainProjectTaskName" CssClass="d-flex"></SfTextBox>
+                         <ValidationMessage For="@(() => newMainProject.TaskName)"></ValidationMessage>
+                     </div>
+                     <div class="pt-3">
+                         <SfDateTimePicker TValue="DateTime?"
+                                           Placeholder='Select Project Start Date and Time'></SfDateTimePicker>
+                         <ValidationMessage For="@(() => newMainProject.StartDate)"></ValidationMessage>
+                     </div>
+                     <div class="pt-3">
+                         <SfDateTimePicker TValue="DateTime?" Placeholder='Select Project End Date and Time'></SfDateTimePicker>
+                         <ValidationMessage For="@(() => newMainProject.EndDate)"></ValidationMessage>
+                     </div>
+                     <hr class="hr" />
+                     <div>
+                         <SfButton IsPrimary="true">Create New Project</SfButton>
+                         <SfButton IsPrimary="false" OnClick="@ProjectCancelClick">Cancel</SfButton>
+                     </div>
+
+                 </EditForm>
              </div>
          </Content>
      </DialogTemplates>
-     <DialogButtons>
-         <DialogButton Content="OK" IsPrimary="true" OnClick="@ProjectOkClick" />
-         <DialogButton Content="Cancel" OnClick="@ProjectCancelClick" />
-     </DialogButtons>
  </SfDialog>
 
  <style>
@@ -125,8 +145,8 @@
 
  @code
  {
+    SfGantt<ProjectDto> Gantt = new();
     SfToast ToastObj = new SfToast();
-    SfToast ToastSuccess = new SfToast();
     private int ToastFlag = 0;
     private string MessageText = string.Empty;
     private string MessageType = string.Empty;
@@ -134,71 +154,40 @@
     private DialogEffect AnimationEffect = DialogEffect.FadeZoom;
     private bool AddKanbanIsVisible { get; set; } = false;
     private bool AddProjectIsVisible { get; set; } = false;
-
-    #region Add Kanban Task
-    private KanbanCardDto newKanbanCard = new();
-    public string KanbanTitle { get; set; } = string.Empty;
-    public string KanbanProjectName { get; set; } = string.Empty;
-    public string KanbanTaskName { get; set; } = string.Empty;
-    public string KanbanAssignee { get; set; } = string.Empty;
-    public string KanbanSummary { get; set; } = string.Empty;
-    public int KanbanProjectId { get; set; }
-    
-    private async Task KanbanOkClick()
-    {
-        newKanbanCard.Title = KanbanTitle;
-        newKanbanCard.Status = "Open";
-        newKanbanCard.Assignee = KanbanAssignee;
-        newKanbanCard.ProjectId = KanbanProjectId;
-        newKanbanCard.Summary = KanbanSummary;
-        newKanbanCard.CreatedDate = DateTime.Now;
-        var result = await httpClient.PostAsJsonAsync("api/Kanban", newKanbanCard);
-        if (result.IsSuccessStatusCode)
-        {
-            await ShowAlert("Kanban Crad created successfully", "Success");
-            this.AddKanbanIsVisible = false;
-        }
-    }
-
-    private void KanbanCancelClick()
-    {
-        this.AddKanbanIsVisible = false;
-    }
-
-    #endregion
-
-    #region Dialog Template Examples
-    private bool Visibility { get; set; } = true;
-    private bool ShowButton { get; set; } = false;
-    private string DialogText = "Greetings Nancy! When will you share me the source files of the project?";
-    private void SendBtnclicked()
-    {
-
-    }
-    #endregion
-
     public List<Object> Toolbaritems = new List<Object>()
         {
-            new ToolbarItem() { Text = "Add New", TooltipText = "Add New Project", Id = "AddNew" },
+            new ToolbarItem() { Text = "Add Main Project", TooltipText = "Add New Project", Id = "AddNew" },
             "CollapseAll",
             "ExpandAll",
             "Search"
         };
-
     private List<ContextMenuItemModel> contextMenuItems = new List<ContextMenuItemModel>()
     {
         new ContextMenuItemModel(){ Text="Refresh", Target=".e-content", Id="refresh"},
         new ContextMenuItemModel(){ Text="Create Kanban Task", Target=".e-content", Id="kanban_task"}
     };
 
-    private void ProjectCancelClick()
+    #region Main Functions
+    public void ToolbarClickHandler(ClickEventArgs args)
     {
-        this.AddProjectIsVisible = false;
+        if (args.Item.Id == "AddNew")
+        {
+            MainProjectTaskName = string.Empty;
+            this.AddProjectIsVisible = true;
+        }
     }
 
-    private void ProjectOkClick()
+    public void OnContextMenuOpen(ContextMenuOpenEventArgs<ProjectDto> Args)
     {
-        this.AddProjectIsVisible = false;
+        if (Args.Column != null && Args.Column.Field == "Duration")
+        {
+            Args.Cancel = true; // To prevent the context menu from opening
+        }
+    }
+
+    public async Task ActionFailure(Syncfusion.Blazor.Grids.FailureEventArgs args)
+    {
+        await ShowAlert(args.Error.Message, "Alert");
     }
 
     private async Task ShowAlert(string message, string type)
@@ -217,34 +206,6 @@
         await this.ToastObj.ShowAsync();
         this.ToastFlag = ((this.ToastFlag != 5) ? (this.ToastFlag + 1) : 0);
     }
-
-    public async Task ActionFailure(Syncfusion.Blazor.Grids.FailureEventArgs args)
-    {
-        await ShowAlert(args.Error.Message, "Alert");
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        ResourceCollection = new();
-        var result = await httpClient.GetAsync("api/Project/Resources");
-        if (result.IsSuccessStatusCode)
-        {
-            var response = await result.Content.ReadAsStringAsync();
-            if (!string.IsNullOrEmpty(response))
-            {
-                List<Resource> _resources = JsonConvert.DeserializeObject<List<Resource>>(response)!;
-                if (_resources.Count > 0)
-                {
-                    foreach (var res in _resources)
-                    {
-                        ResourceCollection.Add(new ProjectResourceDto { ResourceId = res.ResourceId, ResourceName = res.FullName });
-                    }
-                }
-            }
-        }
-    }
-
-    private SfGantt<ProjectDto> Gantt;
 
     private async void ContextMenuItemClickedHandler(ContextMenuClickEventArgs<ProjectDto> args)
     {
@@ -269,19 +230,87 @@
             }
         }
     }
+    #endregion
+
+    #region Add Kanban Task
+    private KanbanCardDto newKanbanCard = new();
+    public string KanbanTitle { get; set; } = string.Empty;
+    public string KanbanProjectName { get; set; } = string.Empty;
+    public string KanbanTaskName { get; set; } = string.Empty;
+    public string KanbanAssignee { get; set; } = string.Empty;
+    public string KanbanSummary { get; set; } = string.Empty;
+    public int KanbanProjectId { get; set; }
+
+    private async Task KanbanOkClick()
+    {
+        newKanbanCard.Title = KanbanTitle;
+        newKanbanCard.Status = "Open";
+        newKanbanCard.Assignee = KanbanAssignee;
+        newKanbanCard.ProjectId = KanbanProjectId;
+        newKanbanCard.Summary = KanbanSummary;
+        newKanbanCard.CreatedDate = DateTime.Now;
+        var result = await httpClient.PostAsJsonAsync("api/Kanban", newKanbanCard);
+        if (result.IsSuccessStatusCode)
+        {
+            await ShowAlert("Kanban Crad created successfully", "Success");
+            this.AddKanbanIsVisible = false;
+        }
+    }
+
+    private void KanbanCancelClick()
+    {
+        this.AddKanbanIsVisible = false;
+    }
 
     private void ValueChangeHandler(ChangeEventArgs<string, Resource> args)
     {
         KanbanAssignee = args.Value;
         StateHasChanged();
     }
+    #endregion
 
-    public void OnContextMenuOpen(ContextMenuOpenEventArgs<ProjectDto> Args)
+    #region Add New Project
+    private ProjectDto newMainProject = new();
+    public string MainProjectTaskName = string.Empty;
+    private void ProjectCancelClick()
     {
-        if (Args.Column != null && Args.Column.Field == "Duration")
+        this.AddProjectIsVisible = false;
+    }
+
+    private void ProjectOkClick()
+    {
+        newMainProject.TaskName = MainProjectTaskName;
+        newMainProject.StartDate = DateTime.Now;
+        newMainProject.EndDate = DateTime.Now;
+        newMainProject.Progress = 0;
+        newMainProject.ParentId = null;
+        this.AddProjectIsVisible = false;
+    }
+    #endregion
+
+    protected override async Task OnInitializedAsync()
+    {
+        ResourceCollection = new();
+        var result = await httpClient.GetAsync("api/Project/Resources");
+        if (result.IsSuccessStatusCode)
         {
-            Args.Cancel = true; // To prevent the context menu from opening
+            var response = await result.Content.ReadAsStringAsync();
+            if (!string.IsNullOrEmpty(response))
+            {
+                List<Resource> _resources = JsonConvert.DeserializeObject<List<Resource>>(response)!;
+                if (_resources.Count > 0)
+                {
+                    foreach (var res in _resources)
+                    {
+                        ResourceCollection.Add(new ProjectResourceDto { ResourceId = res.ResourceId, ResourceName = res.FullName });
+                    }
+                }
+            }
         }
     }
+
+
+
+
 
 }
