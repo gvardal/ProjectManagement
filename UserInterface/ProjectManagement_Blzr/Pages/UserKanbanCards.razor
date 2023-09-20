@@ -1,20 +1,53 @@
 ﻿@page "/userkanbans"
 
+<div class="container-fluid pb-4">
+    <SfKanban TValue="KanbanCardDto" KeyField="Status" AllowDragAndDrop="true" EnableTooltip="false">
+        <SfDataManager Url="api/Kanban" Adaptor="@Syncfusion.Blazor.Adaptors.WebApiAdaptor"></SfDataManager>
+        <KanbanColumns>
+            @foreach (Syncfusion.Blazor.Kanban.ColumnModel item in columnData)
+            {
+                <KanbanColumn HeaderText="@item.HeaderText" KeyField="@item.KeyField"></KanbanColumn>
+            }
+        </KanbanColumns>
+        <KanbanCardSettings ShowHeader="false" HeaderField="Id" ContentField="Summary" GrabberField="Color">
+            <Template>
+                @{
+                    KanbanCardDto card = (KanbanCardDto)context;
+                    <div class="card-template-wrap">
+                        <table>
+                            <tbody>
+                                @if (@card.ProjectId != null)
+                                {
+                                    <tr>From Project : <span>@card.ProjectTitle</span></tr>
+                                    <hr class="hr" />
+                                    <tr>@card.Summary</tr>
+                                }
+                                else
+                                {
+                                    @card.Summary;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </Template>
+        </KanbanCardSettings>
+        <KanbanEvents TValue="KanbanCardDto" DialogOpen="@((args) => { args.Cancel = false; })"></KanbanEvents>
+    </SfKanban>
+</div>
 
-<SfKanban TValue="KanbanCardDto" KeyField="Status" AllowDragAndDrop="true">
-    <SfDataManager Url="api/Kanban" 
-    Adaptor="@Syncfusion.Blazor.Adaptors.WebApiAdaptor"></SfDataManager>
-    <KanbanColumns>
-        @foreach (Syncfusion.Blazor.Kanban.ColumnModel item in columnData)
-        {
-            <KanbanColumn HeaderText="@item.HeaderText" KeyField="@item.KeyField"></KanbanColumn>
-        }
-    </KanbanColumns>
-    <KanbanCardSettings HeaderField="Id" ContentField="Summary"></KanbanCardSettings>
-    <KanbanEvents TValue="KanbanCardDto" DialogOpen="@((args) => { args.Cancel = false; })"></KanbanEvents>
-</SfKanban>
+<style>
 
-@code 
+    .e-kanban .card-template-wrap {
+        line-height: normal;
+        font-size: 14px;
+        width: 100%;
+        padding:8px;
+    }
+
+</style>
+
+@code
 {
     private List<Syncfusion.Blazor.Kanban.ColumnModel> columnData = new List<Syncfusion.Blazor.Kanban.ColumnModel>() {
         new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "To Do", KeyField= new List<string>() { "Open" } },

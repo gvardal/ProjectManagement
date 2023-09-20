@@ -1,6 +1,6 @@
 ﻿@page "/projectgantt"
 
-
+@inject IConfiguration config
 @inject HttpClient httpClient
 
 @* Alert Message *@
@@ -13,14 +13,12 @@
               ContextMenuItems="@contextMenuItems" Toolbar="Toolbaritems">
          <SfDataManager Url="api/Project" Adaptor="Adaptors.WebApiAdaptor" CrossDomain="false"></SfDataManager>
          <GanttTaskFields Id="ProjectId" Name="TaskName" StartDate="StartDate" EndDate="EndDate"
-                          Duration="Duration" Progress="Progress" ParentID="ParentId" ResourceInfo="ProjectResources">
-         </GanttTaskFields>
+                          Duration="Duration" Progress="Progress" ParentID="ParentId" ResourceInfo="ProjectResources"></GanttTaskFields>         
          <GanttEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" AllowTaskbarEditing="true"
                             Mode="Syncfusion.Blazor.Gantt.EditMode.Dialog"></GanttEditSettings>
          <GanttResourceFields Resources="@ResourceCollection" Id="ResourceId" Name="ResourceName" Unit="Unit" Group="Group"
                               TResources="ProjectResourceDto"></GanttResourceFields>
          <GanttLabelSettings RightLabel="ProjectResources" TValue="ProjectDto"></GanttLabelSettings>
-
          <GanttEvents TValue="ProjectDto" OnActionFailure="ActionFailure" OnToolbarClick="ToolbarClickHandler"
                       ContextMenuOpen="OnContextMenuOpen" ContextMenuItemClicked=ContextMenuItemClickedHandler></GanttEvents>
      </SfGantt>
@@ -249,6 +247,7 @@
         newKanbanCard.ProjectId = KanbanProjectId;
         newKanbanCard.Summary = KanbanSummary;
         newKanbanCard.CreatedDate = DateTime.Now;
+        newKanbanCard.Color = config["ProjectKanbanColor"];
         var result = await httpClient.PostAsJsonAsync("api/Kanban", newKanbanCard);
         if (result.IsSuccessStatusCode)
         {
@@ -308,9 +307,5 @@
             }
         }
     }
-
-
-
-
 
 }

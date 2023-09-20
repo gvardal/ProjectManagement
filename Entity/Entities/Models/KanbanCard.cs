@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Entities.Models
+﻿namespace Entities.Models
 {
     public class KanbanCard
     {
@@ -9,6 +7,7 @@ namespace Entities.Models
         public string Status { get; set; } = null!;
         public string Summary { get; set; } = null!;
         public string Assignee { get; set; } = null!;
+        public string Color { get; set; } = string.Empty;
         public int? ProjectId { get; set; }
         public DateTime CreatedDate { get; set; }
     }

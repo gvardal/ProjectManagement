@@ -16,8 +16,9 @@ namespace Entities.DataTransferObjects
 
         [Required(ErrorMessage = "Enter Assignee")]
         public string? Assignee { get; set; } 
-
+        public string? Color { get; set; }
         public int? ProjectId { get; set; }
+        public string? ProjectTitle { get; set; }
         public DateTime CreatedDate { get; set; } 
     }
 }

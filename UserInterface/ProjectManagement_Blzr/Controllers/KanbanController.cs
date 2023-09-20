@@ -19,7 +19,42 @@ namespace ProjectManagement_Blzr.Controllers
         [HttpGet]
         public object Get()
         {
-            return _context.KanbanCards;
+            List<KanbanCardDto> cards = new();
+            var result = from knb in _context.KanbanCards
+                         join pro in _context.Projects on knb.ProjectId equals pro.ProjectId into knb_pro
+                         from p in knb_pro.DefaultIfEmpty()
+                         select new
+                         {
+                             Id = knb.Id,
+                             Title = knb.Title,
+                             Summary = knb.Summary,
+                             Status = knb.Status,
+                             Assignee = knb.Assignee,
+                             CreatedDate = knb.CreatedDate,
+                             Color = knb.Color,
+                             ProjectId = knb.ProjectId,
+                             ProjectName = p.TaskName
+                         };
+            
+            if (result.Count() > 0)
+            {
+                foreach (var card in result)
+                {
+                    cards.Add(new KanbanCardDto
+                    {
+                        Id = card.Id,
+                        Title = card.Title,
+                        Summary = card.Summary,
+                        Status = card.Status,
+                        Assignee = card.Assignee,
+                        CreatedDate = card.CreatedDate,
+                        Color = card.Color,
+                        ProjectId = card.ProjectId,
+                        ProjectTitle = card.ProjectName
+                    });
+                }
+            }
+            return cards;
         }
 
         [HttpPost]
@@ -31,6 +66,8 @@ namespace ProjectManagement_Blzr.Controllers
             _task.Status = task.Status!;
             _task.Assignee = task.Assignee!;
             _task.CreatedDate = task.CreatedDate!;
+            _task.Color = task.Color!;
+            _task.ProjectId = task.ProjectId!;
             _context.KanbanCards.Add(_task);
             _context.SaveChanges();
             return Ok();
