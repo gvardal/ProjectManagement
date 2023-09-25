@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories.Infrastructure;
 
@@ -11,9 +12,11 @@ using Repositories.Infrastructure;
 namespace ProjectManagement_Api.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20230920111234_AddKanbanCardPriority")]
+    partial class AddKanbanCardPriority
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +42,6 @@ namespace ProjectManagement_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EstimatedEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Priority")
@@ -73,8 +73,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Open",
                             Summary = "Analyze the new requirements gathered from the customer.",
                             Title = "BLAZ-29001"
@@ -85,8 +84,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Andrew Fuller",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "InProgress",
                             Summary = "Improve application performance",
                             Title = "BLAZ-29002"
@@ -97,8 +95,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Open",
                             Summary = "Arrange a web meeting with the customer to get new requirements.",
                             Title = "BLAZ-29003"
@@ -109,8 +106,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "InProgress",
                             Summary = "Fix the issues reported in the IE browser.",
                             Title = "BLAZ-29004"
@@ -121,8 +117,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Review",
                             Summary = "Fix the issues reported by the customer.",
                             Title = "BLAZ-29005"
@@ -133,8 +128,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Review",
                             Summary = "Fix the issues reported in Safari browser.",
                             Title = "BLAZ-29006"
@@ -145,8 +139,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Close",
                             Summary = "Test the application in the IE browser.",
                             Title = "BLAZ-29007"
@@ -157,8 +150,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Validate",
                             Summary = "Validate the issues reported by the customer.",
                             Title = "BLAZ-29008"
@@ -169,8 +161,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Open",
                             Summary = "Show the retrieved data from the server in grid control.",
                             Title = "BLAZ-29009"
@@ -181,8 +172,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "InProgress",
                             Summary = "Fix cannot open user’s default database SQL error.",
                             Title = "BLAZ-29010"
@@ -193,8 +183,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Review",
                             Summary = "Fix the issues reported in data binding.",
                             Title = "BLAZ-29011"
@@ -205,8 +194,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Andrew Fuller",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Close",
                             Summary = "Analyze SQL server 2008 connection.",
                             Title = "BLAZ-29012"
@@ -217,8 +205,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Validate",
                             Summary = "Validate databinding issues.",
                             Title = "BLAZ-29013"
@@ -229,8 +216,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Close",
                             Summary = "Analyze grid control.",
                             Title = "BLAZ-29014"
@@ -241,8 +227,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Close",
                             Summary = "Stored procedure for initial data binding of the grid.",
                             Title = "BLAZ-29015"
@@ -253,8 +238,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Close",
                             Summary = "Analyze stored procedures.",
                             Title = "BLAZ-29016"
@@ -265,8 +249,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Validate",
                             Summary = "Validate editing issues.",
                             Title = "BLAZ-29017"
@@ -277,8 +260,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Review",
                             Summary = "Test editing functionality.",
                             Title = "BLAZ-29018"
@@ -289,8 +271,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Andrew Fuller",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Open",
                             Summary = "Enhance editing functionality.",
                             Title = "BLAZ-29019"
@@ -301,8 +282,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "InProgress",
                             Summary = "Improve the performance of the editing functionality.",
                             Title = "BLAZ-29020"
@@ -313,8 +293,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Open",
                             Summary = "Arrange web meeting with the customer to show editing demo.",
                             Title = "BLAZ-29021"
@@ -325,8 +304,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Review",
                             Summary = "Fix the editing issues reported by the customer.",
                             Title = "BLAZ-29022"
@@ -337,8 +315,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Testing",
                             Summary = "Fix the issues reported by the customer.",
                             Title = "BLAZ-29023"
@@ -349,8 +326,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Testing",
                             Summary = "Fix the issues reported in Safari browser.",
                             Title = "BLAZ-29024"
@@ -361,8 +337,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Testing",
                             Summary = "Fix the issues reported in data binding.",
                             Title = "BLAZ-29025"
@@ -373,8 +348,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Testing",
                             Summary = "Test editing functionality.",
                             Title = "BLAZ-29026"
@@ -385,8 +359,7 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Priority = "UnSet",
+                            Priority = "Low",
                             Status = "Testing",
                             Summary = "Test editing feature in the IE browser.",
                             Title = "BLAZ-29027"

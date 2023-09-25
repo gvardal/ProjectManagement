@@ -31,9 +31,11 @@ namespace ProjectManagement_Blzr.Controllers
                              Status = knb.Status,
                              Assignee = knb.Assignee,
                              CreatedDate = knb.CreatedDate,
+                             EstimatedEndDate = knb.EstimatedEndDate,
                              Color = knb.Color,
                              ProjectId = knb.ProjectId,
-                             ProjectName = p.TaskName
+                             ProjectName = p.TaskName,
+                             Priority = knb.Priority,
                          };
             
             if (result.Count() > 0)
@@ -48,9 +50,13 @@ namespace ProjectManagement_Blzr.Controllers
                         Status = card.Status,
                         Assignee = card.Assignee,
                         CreatedDate = card.CreatedDate,
+                        EstimatedEndDate = card.EstimatedEndDate,
                         Color = card.Color,
                         ProjectId = card.ProjectId,
-                        ProjectTitle = card.ProjectName
+                        ProjectTitle = card.ProjectName,
+                        Priority = card.Priority,
+                        ClassName = card.Priority != null ? new List<string> { $"e-{card.Priority.ToLower()}" } : null,
+                        CardTags = card.EstimatedEndDate.ToString("dd.MM.yyyy")!="01.01.0001" ? new List<string> { $"Estimated End Date : {card.EstimatedEndDate.ToString("dd.MM.yyyy")}" } : new List<string> { },
                     });
                 }
             }
@@ -66,6 +72,7 @@ namespace ProjectManagement_Blzr.Controllers
             _task.Status = task.Status!;
             _task.Assignee = task.Assignee!;
             _task.CreatedDate = task.CreatedDate!;
+            _task.EstimatedEndDate = task.EstimatedEndDate!;
             _task.Color = task.Color!;
             _task.ProjectId = task.ProjectId!;
             _context.KanbanCards.Add(_task);

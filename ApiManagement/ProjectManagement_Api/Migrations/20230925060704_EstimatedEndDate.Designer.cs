@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repositories.Infrastructure;
 
@@ -11,9 +12,11 @@ using Repositories.Infrastructure;
 namespace ProjectManagement_Api.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20230925060704_EstimatedEndDate")]
+    partial class EstimatedEndDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +44,7 @@ namespace ProjectManagement_Api.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("EstimatedEndDate")
+                    b.Property<DateTime?>("EstimatedEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Priority")
@@ -73,7 +76,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Open",
                             Summary = "Analyze the new requirements gathered from the customer.",
@@ -85,7 +87,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Andrew Fuller",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "InProgress",
                             Summary = "Improve application performance",
@@ -97,7 +98,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Open",
                             Summary = "Arrange a web meeting with the customer to get new requirements.",
@@ -109,7 +109,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "InProgress",
                             Summary = "Fix the issues reported in the IE browser.",
@@ -121,7 +120,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Review",
                             Summary = "Fix the issues reported by the customer.",
@@ -133,7 +131,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Review",
                             Summary = "Fix the issues reported in Safari browser.",
@@ -145,7 +142,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Close",
                             Summary = "Test the application in the IE browser.",
@@ -157,7 +153,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Validate",
                             Summary = "Validate the issues reported by the customer.",
@@ -169,7 +164,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Open",
                             Summary = "Show the retrieved data from the server in grid control.",
@@ -181,7 +175,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "InProgress",
                             Summary = "Fix cannot open user’s default database SQL error.",
@@ -193,7 +186,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Review",
                             Summary = "Fix the issues reported in data binding.",
@@ -205,7 +197,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Andrew Fuller",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Close",
                             Summary = "Analyze SQL server 2008 connection.",
@@ -217,7 +208,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Validate",
                             Summary = "Validate databinding issues.",
@@ -229,7 +219,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Margaret hamilt",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Close",
                             Summary = "Analyze grid control.",
@@ -241,7 +230,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Close",
                             Summary = "Stored procedure for initial data binding of the grid.",
@@ -253,7 +241,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Close",
                             Summary = "Analyze stored procedures.",
@@ -265,7 +252,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Validate",
                             Summary = "Validate editing issues.",
@@ -277,7 +263,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Review",
                             Summary = "Test editing functionality.",
@@ -289,7 +274,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Andrew Fuller",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Open",
                             Summary = "Enhance editing functionality.",
@@ -301,7 +285,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "InProgress",
                             Summary = "Improve the performance of the editing functionality.",
@@ -313,7 +296,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Open",
                             Summary = "Arrange web meeting with the customer to show editing demo.",
@@ -325,7 +307,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Review",
                             Summary = "Fix the editing issues reported by the customer.",
@@ -337,7 +318,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Steven walker",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Testing",
                             Summary = "Fix the issues reported by the customer.",
@@ -349,7 +329,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Testing",
                             Summary = "Fix the issues reported in Safari browser.",
@@ -361,7 +340,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Testing",
                             Summary = "Fix the issues reported in data binding.",
@@ -373,7 +351,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Nancy Davloio",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Testing",
                             Summary = "Test editing functionality.",
@@ -385,7 +362,6 @@ namespace ProjectManagement_Api.Migrations
                             Assignee = "Janet Leverling",
                             Color = "",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedEndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Priority = "UnSet",
                             Status = "Testing",
                             Summary = "Test editing feature in the IE browser.",

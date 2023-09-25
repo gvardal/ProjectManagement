@@ -1,5 +1,5 @@
 ﻿@page "/projectgantt"
-
+@inject NavigationManager navigationManager
 @inject IConfiguration config
 @inject HttpClient httpClient
 
@@ -8,12 +8,13 @@
     <ToastPosition X="Left" Y="Bottom"></ToastPosition>
 </SfToast>
 
-<div class="m-2 p-2">
-    <SfGantt @ref="Gantt" TValue="ProjectDto" Height="850px" Width="1400px" WorkUnit="WorkUnit.Hour" HighlightWeekends
+@* Height="850px" Width="1400px" *@
+<div>
+    <SfGantt @ref="Gantt" TValue="ProjectDto" WorkUnit="WorkUnit.Hour" HighlightWeekends
               ContextMenuItems="@contextMenuItems" Toolbar="Toolbaritems">
          <SfDataManager Url="api/Project" Adaptor="Adaptors.WebApiAdaptor" CrossDomain="false"></SfDataManager>
          <GanttTaskFields Id="ProjectId" Name="TaskName" StartDate="StartDate" EndDate="EndDate"
-                          Duration="Duration" Progress="Progress" ParentID="ParentId" ResourceInfo="ProjectResources"></GanttTaskFields>         
+                          Duration="Duration" Progress="Progress" ParentID="ParentId" ResourceInfo="ProjectResources"></GanttTaskFields>
          <GanttEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" AllowTaskbarEditing="true"
                             Mode="Syncfusion.Blazor.Gantt.EditMode.Dialog"></GanttEditSettings>
          <GanttResourceFields Resources="@ResourceCollection" Id="ResourceId" Name="ResourceName" Unit="Unit" Group="Group"
@@ -25,7 +26,7 @@
  </div>
 
  @* Create Kanban Card Dialog *@
- <SfDialog Width="500px" Target="#target" ShowCloseIcon="false" IsModal="true"
+ <SfDialog Height="Auto" Width="500px" Target="#target" ShowCloseIcon="false" IsModal="true"
            AllowDragging="true" @bind-Visible="@AddKanbanIsVisible">
      <DialogAnimationSettings Effect="@AnimationEffect" Duration=500 />
      <DialogTemplates>
@@ -45,6 +46,16 @@
                      <div>
                          <SfTextBox Placeholder='Title' @bind-Value="@KanbanTitle" FloatLabelType='@FloatLabelType.Auto' Multiline="false"></SfTextBox>
                          <ValidationMessage For="@(() => newKanbanCard.Title)"></ValidationMessage>
+                     </div>
+                      <div>
+                         <SfDatePicker TValue="DateTime" @bind-Value="@KanbanEstimatedEndDate" Placeholder="Estimated End Date"></SfDatePicker>
+                         <ValidationMessage For="@(() => newKanbanCard.EstimatedEndDate)"></ValidationMessage>
+                      </div>
+                     <div>
+                         <SfComboBox Placeholder="Priority" FloatLabelType='@FloatLabelType.Auto'
+                         @bind-Value="@KanbanPriority" DataSource="@Priorities">
+                             <ComboBoxFieldSettings Value="Name"></ComboBoxFieldSettings>
+                         </SfComboBox>
                      </div>
                      <div>
                          <SfComboBox TValue="string" TItem="Resource" AllowFiltering
@@ -162,6 +173,7 @@
     private List<ContextMenuItemModel> contextMenuItems = new List<ContextMenuItemModel>()
     {
         new ContextMenuItemModel(){ Text="Refresh", Target=".e-content", Id="refresh"},
+        new ContextMenuItemModel(){ Text="Project Information", Target=".e-content", Id="project_info", IconCss="e-icons e-circle-info"},
         new ContextMenuItemModel(){ Text="Create Kanban Task", Target=".e-content", Id="kanban_task"}
     };
 
@@ -180,6 +192,15 @@
         if (Args.Column != null && Args.Column.Field == "Duration")
         {
             Args.Cancel = true; // To prevent the context menu from opening
+        }
+
+        if (Args.RowInfo.RowData.ParentId != null)
+        {
+            Args.ContextMenuObj.Items[1]!.Hidden = true;
+        }
+        else
+        {
+            Args.ContextMenuObj.Items[1]!.Hidden = false;
         }
     }
 
@@ -227,6 +248,11 @@
                 this.AddKanbanIsVisible = true;
             }
         }
+
+        if (args.Item.Id == "project_info")
+        {
+            navigationManager.NavigateTo($"/projectinfo/{args.RowInfo.RowData.ProjectId}",true);
+        }
     }
     #endregion
 
@@ -237,7 +263,19 @@
     public string KanbanTaskName { get; set; } = string.Empty;
     public string KanbanAssignee { get; set; } = string.Empty;
     public string KanbanSummary { get; set; } = string.Empty;
+    public string KanbanPriority { get; set; } = string.Empty;
+    public DateTime KanbanEstimatedEndDate { get; set; }
     public int KanbanProjectId { get; set; }
+    public class Priority
+    {
+        public string? Name { get; set; }
+    }
+    List<Priority> Priorities = new List<Priority>
+    {
+        new Priority() { Name = "Low" },
+        new Priority() { Name = "Medium"},
+        new Priority() { Name = "High"},
+    };
 
     private async Task KanbanOkClick()
     {
@@ -247,7 +285,9 @@
         newKanbanCard.ProjectId = KanbanProjectId;
         newKanbanCard.Summary = KanbanSummary;
         newKanbanCard.CreatedDate = DateTime.Now;
+        newKanbanCard.EstimatedEndDate = KanbanEstimatedEndDate;
         newKanbanCard.Color = config["ProjectKanbanColor"];
+        newKanbanCard.Priority = KanbanPriority;
         var result = await httpClient.PostAsJsonAsync("api/Kanban", newKanbanCard);
         if (result.IsSuccessStatusCode)
         {

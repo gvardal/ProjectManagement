@@ -3,7 +3,7 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "userkanbans",
+      "launchUrl": "projectinfo/1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

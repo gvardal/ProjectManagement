@@ -1,54 +1,152 @@
 ﻿@page "/userkanbans"
 
-<div class="container-fluid pb-4">
-    <SfKanban TValue="KanbanCardDto" KeyField="Status" AllowDragAndDrop="true" EnableTooltip="false">
-        <SfDataManager Url="api/Kanban" Adaptor="@Syncfusion.Blazor.Adaptors.WebApiAdaptor"></SfDataManager>
-        <KanbanColumns>
-            @foreach (Syncfusion.Blazor.Kanban.ColumnModel item in columnData)
-            {
-                <KanbanColumn HeaderText="@item.HeaderText" KeyField="@item.KeyField"></KanbanColumn>
-            }
-        </KanbanColumns>
-        <KanbanCardSettings ShowHeader="false" HeaderField="Id" ContentField="Summary" GrabberField="Color">
-            <Template>
-                @{
-                    KanbanCardDto card = (KanbanCardDto)context;
-                    <div class="card-template-wrap">
-                        <table>
-                            <tbody>
-                                @if (@card.ProjectId != null)
-                                {
-                                    <tr>From Project : <span>@card.ProjectTitle</span></tr>
-                                    <hr class="hr" />
-                                    <tr>@card.Summary</tr>
-                                }
-                                else
-                                {
-                                    @card.Summary;
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+<div class="container-fluid">
+    <div>
+        <SfToolbar CssClass="mx-2 mb-1">
+            <ToolbarItems>
+                <ToolbarItem Align="@ItemAlign.Left">
+                    <Template>
+                        <SfButton OnClick="CreateKanbanCard" IconCss="e-icons e-plus" IsPrimary></SfButton>
+                    </Template>
+                </ToolbarItem>
+                <ToolbarItem PrefixIcon="e-tbar-search-icon tb-icons" TooltipText="Search" Align="@ItemAlign.Right">
+                </ToolbarItem>
+                <ToolbarItem PrefixIcon="e-tbar-settings-icon tb-icons" TooltipText="Popup" Align="@ItemAlign.Right">
+                </ToolbarItem>
+            </ToolbarItems>
+        </SfToolbar>
+    </div>
+    <div>
+        <SfKanban TValue="KanbanCardDto" KeyField="Status" AllowDragAndDrop="true" EnableTooltip="false">
+            <SfDataManager Url="api/Kanban" Adaptor="@Syncfusion.Blazor.Adaptors.WebApiAdaptor"></SfDataManager>
+            <KanbanColumns>
+                @foreach (Syncfusion.Blazor.Kanban.ColumnModel item in columnData)
+                {
+                    <KanbanColumn HeaderText="@item.HeaderText" KeyField="@item.KeyField"></KanbanColumn>
                 }
-            </Template>
-        </KanbanCardSettings>
-        <KanbanEvents TValue="KanbanCardDto" DialogOpen="@((args) => { args.Cancel = false; })"></KanbanEvents>
-    </SfKanban>
+            </KanbanColumns>
+            <KanbanCardSettings ShowHeader="false" HeaderField="Id" ContentField="Summary" TagsField="CardTags" GrabberField="Color" FooterCssField="ClassName">
+            </KanbanCardSettings>
+            <KanbanEvents TValue="KanbanCardDto" DialogOpen="@((args) => { args.Cancel = false; })"></KanbanEvents>
+        </SfKanban>
+    </div>
 </div>
 
-<style>
 
-    .e-kanban .card-template-wrap {
-        line-height: normal;
-        font-size: 14px;
-        width: 100%;
-        padding:8px;
+<SfDialog Height="auto" Width="500px" Target="#target" ShowCloseIcon="true" IsModal="true"
+          AllowDragging="true" @bind-Visible="@IsVisible">
+    <DialogAnimationSettings Effect="DialogEffect.FadeZoom" Duration=500 />
+    <DialogTemplates>
+        <Header>
+            <div class="container">
+                <SfMessage CssClass="custom" Severity="MessageSeverity.Info">Create Kanban Task</SfMessage>
+            </div>
+        </Header>
+        <Content>
+            <div class="container">
+                <div>
+                    <SfTextBox Placeholder='Title' FloatLabelType='@FloatLabelType.Auto' Multiline="false"></SfTextBox>
+                </div>
+                <div>
+                    <SfComboBox Placeholder="Priority" FloatLabelType='@FloatLabelType.Auto'
+                    @bind-Value="@KanbanPriority" DataSource="@Priorities">
+                        <ComboBoxFieldSettings Value="Name"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </div>
+                <div>
+                    <SfComboBox TValue="string" TItem="Resource" AllowFiltering
+                                 Placeholder="Responsible" FloatLabelType='@FloatLabelType.Auto'>
+                         <SfDataManager Url="api/Project/Resources" Adaptor="Adaptors.WebApiAdaptor" CrossDomain=true></SfDataManager>
+                         <ComboBoxFieldSettings Value="FullName"></ComboBoxFieldSettings>
+                         <ComboBoxEvents TItem="Resource" TValue="string"></ComboBoxEvents>
+                         <ComboBoxTemplates TItem="Resource">
+                             <ActionFailureTemplate>
+                                 <span class='norecord'>Data fetch get fails </span>
+                             </ActionFailureTemplate>
+                         </ComboBoxTemplates>
+                     </SfComboBox>
+                 </div>
+                 <div>
+                     <SfTextBox Placeholder='Summary' FloatLabelType='@FloatLabelType.Auto' Multiline="true"></SfTextBox>
+                 </div>
+                 <hr class="hr" />
+                 <div>
+                     <SfButton IsPrimary="true" OnClick="@KanbanOkClick">Create Kanban Card</SfButton>
+                     <SfButton IsPrimary="false" OnClick="@KanbanCancelClick" CssClass="ps-2">Cancel</SfButton>
+                 </div>
+             </div>
+         </Content>
+     </DialogTemplates>
+ </SfDialog>
+
+
+ <style>
+
+     .custom.e-message .e-msg-icon::before {
+         content: '\e805';
+     }
+
+     .e-kanban .card-template-wrap {
+         line-height: normal;
+         font-size: 14px;
+         width: 100%;
+         padding: 8px;
+     }
+
+     .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-container .e-card.e-card-color {
+         border: 1px solid rgba(0,0,0,0);
+         border-left: 10px solid;
+     }
+
+     .e-kanban .e-card .e-card-footer {
+         display: flex;
+         justify-content: space-between;
+     }
+
+         .e-kanban .e-card .e-card-footer > div:last-child {
+             margin-left: auto;
+         }
+
+         .e-kanban .e-card .e-card-footer .e-card-footer-css {
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-position: center;
+             height: 24px;
+             width: 24px;
+             margin-right: 1px;
+         }
+
+             .e-kanban .e-card .e-card-footer .e-card-footer-css.e-low {
+                 background-image: url("img/low.png");
+             }
+
+             .e-kanban .e-card .e-card-footer .e-card-footer-css.e-medium {
+                 background-image: url("img/medium.png");
+             }
+
+             .e-kanban .e-card .e-card-footer .e-card-footer-css.e-high {
+                 background-image: url("img/high.png");
+             }
+
+ </style>
+
+ @code
+ {
+    private bool IsVisible { get; set; } = false;
+    public string KanbanPriority { get; set; } = string.Empty;
+
+    public class Priority
+    {
+        public string? Name { get; set; }
     }
 
-</style>
+    List<Priority> Priorities = new List<Priority>
+    {
+        new Priority() { Name = "Low" },
+        new Priority() { Name = "Medium"},
+        new Priority() { Name = "High"},
+    };
 
-@code
-{
     private List<Syncfusion.Blazor.Kanban.ColumnModel> columnData = new List<Syncfusion.Blazor.Kanban.ColumnModel>() {
         new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "To Do", KeyField= new List<string>() { "Open" } },
         new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "In Progress", KeyField= new List<string>() { "InProgress" } },
@@ -56,4 +154,32 @@
         new Syncfusion.Blazor.Kanban.ColumnModel(){ HeaderText= "Done", KeyField=new List<string>() { "Close" } }
     };
 
+    private void CreateKanbanCard()
+    {
+        IsVisible = true;
+        KanbanPriority = string.Empty;
+    }
+
+    private void KanbanOkClick()
+    {
+        @* newKanbanCard.Title = KanbanTitle;
+        newKanbanCard.Status = "Open";
+        newKanbanCard.Assignee = KanbanAssignee;
+        newKanbanCard.ProjectId = KanbanProjectId;
+        newKanbanCard.Summary = KanbanSummary;
+        newKanbanCard.CreatedDate = DateTime.Now;
+        newKanbanCard.Color = config["ProjectKanbanColor"];
+        newKanbanCard.Priority = KanbanPriority;
+        var result = await httpClient.PostAsJsonAsync("api/Kanban", newKanbanCard);
+        if (result.IsSuccessStatusCode)
+        {
+            await ShowAlert("Kanban Crad created successfully", "Success");
+            this.IsVisible = false;
+        } *@
+    }
+
+    private void KanbanCancelClick()
+    {
+        IsVisible = false;
+    }
 }

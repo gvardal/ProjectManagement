@@ -1,0 +1,77 @@
+﻿@page "/projectinfo/{Id:int}"
+@page "/projectinfo"
+@inject NavigationManager navigationManager
+
+@if (Id > 0)
+{
+    <div class="row pb-2">
+        <div class="col-md-3 generalInfo">
+            <SfCard>
+                <CardHeader Title="Project Information Of" SubTitle="Product concept" />
+                <CardContent>
+                    <div class="row">
+                        <a>Proje Bitiş Tarihi 01.09.2023</a>
+                    </div>
+                    <div class="row">
+                        <a>Proje Bitiş Tarihi 21.09.2023</a>
+                    </div>
+                </CardContent>
+            </SfCard>
+        </div>
+        <div class="col-md-3">
+            <SfCard>       
+                <CardHeader Title="Percentage Of Complete"></CardHeader>
+                <CardContent>
+                    <SfCircularGauge Width="150px" Height="150px" >
+                        <CircularGaugeAxes>
+                            <CircularGaugeAxis>
+                                <CircularGaugePointers>
+                                    <CircularGaugePointer Value="50" Type="PointerType.Needle">
+                                    </CircularGaugePointer>
+                                </CircularGaugePointers>
+                            </CircularGaugeAxis>
+                        </CircularGaugeAxes>
+                    </SfCircularGauge>
+                </CardContent>
+            </SfCard>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+
+    </div>
+    <div class="row">
+        <hr />
+        <h1>Project Information of @Id</h1>
+    </div>
+}
+else
+{
+    navigationManager.NavigateTo("/projectgantt");
+}
+
+<style>
+
+    .e-card {
+        max-height : 150px;
+    }
+
+    .generalInfo .e-card {
+        background-color: #DAF5FF;
+    }
+
+    .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
+        padding-top: 0px;
+        font-weight: bold;
+    }
+
+    .e-card .e-card-header .e-card-header-caption .e-card-header-title {
+        font-weight: 300;
+    }
+
+</style>
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+}
