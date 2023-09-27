@@ -99,6 +99,23 @@ namespace ProjectManagement_Blzr.Controllers
         }
 
 
+        [HttpPut]
+        [Route("UpdateEstimatedEndDate", Name = "UpdateEstimatedEndDate")]
+        public IActionResult UpdateEstimatedEndDate([FromBody] KanbanCardDto KanbanCard)
+        {
+            var kanbanCard = _context.KanbanCards.Where(x => x.Id.Equals(KanbanCard.Id)).FirstOrDefault();
+            if (kanbanCard != null)
+            {
+                kanbanCard.EstimatedEndDate = KanbanCard.EstimatedEndDate;
+                _context.SaveChanges();
+                return Ok(KanbanCard);
+            }
+            else
+            {
+                return BadRequest("Kayıt Güncellenmedi");
+            }
+        }
+
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

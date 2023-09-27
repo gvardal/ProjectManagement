@@ -17,7 +17,7 @@
         </SfToolbar>
     </div>
     <div>
-        <SfKanban TValue="KanbanCardDto" KeyField="Status" AllowDragAndDrop="true" EnableTooltip="false">
+         <SfKanban TValue="KanbanCardDto" KeyField="Status" AllowDragAndDrop="true" EnableTooltip="false">
             <SfDataManager Url="api/Kanban" Adaptor="@Syncfusion.Blazor.Adaptors.WebApiAdaptor"></SfDataManager>
             <KanbanColumns>
                 @foreach (Syncfusion.Blazor.Kanban.ColumnModel item in columnData)
@@ -54,12 +54,12 @@
                     </SfComboBox>
                 </div>
                 <div>
-                    <SfComboBox TValue="string" TItem="Resource" AllowFiltering
+                    <SfComboBox TValue="string" TItem="Entities.Models.Resource" AllowFiltering
                                  Placeholder="Responsible" FloatLabelType='@FloatLabelType.Auto'>
                          <SfDataManager Url="api/Project/Resources" Adaptor="Adaptors.WebApiAdaptor" CrossDomain=true></SfDataManager>
                          <ComboBoxFieldSettings Value="FullName"></ComboBoxFieldSettings>
-                         <ComboBoxEvents TItem="Resource" TValue="string"></ComboBoxEvents>
-                         <ComboBoxTemplates TItem="Resource">
+                         <ComboBoxEvents TItem="Entities.Models.Resource" TValue="string"></ComboBoxEvents>
+                         <ComboBoxTemplates TItem="Entities.Models.Resource">
                              <ActionFailureTemplate>
                                  <span class='norecord'>Data fetch get fails </span>
                              </ActionFailureTemplate>

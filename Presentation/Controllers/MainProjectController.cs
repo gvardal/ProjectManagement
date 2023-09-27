@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.DataTransferObjects;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
 namespace Presentation.Controllers
@@ -18,6 +19,14 @@ namespace Presentation.Controllers
         public IActionResult GetAllProjects()
         {
             return Ok(_manager.MainProjectService.GetAllMainProjects(false));
+        }
+
+        [HttpPut]
+        [Route("UpdateEstimatedEndDate", Name = "UpdateEstimatedEndDate")]
+        public IActionResult UpdateEstimatedEndDate([FromBody] KanbanCardDto KanbanCard)
+        {
+
+            return Ok(KanbanCard);
         }
     }
 }

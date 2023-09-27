@@ -3,7 +3,7 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "projectinfo/1",
+      "launchUrl": "kanbanscheduler",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
