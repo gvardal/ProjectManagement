@@ -11,12 +11,27 @@
         </SfTreeView>
     </div>
     <div class="col-lg-10 e-droppable">
-        <SfSchedule @ref="ScheduleRef" TValue="AppointmentData" Height="calc(100vh - 4.75rem)" AllowDragAndDrop="false">
-            <ScheduleEventSettings DataSource="@appointmentDatas" IgnoreWhitespace="false"></ScheduleEventSettings>
+        <SfSchedule @ref="ScheduleRef" TValue="AppointmentData" Height="calc(100vh - 4.75rem)" AllowDragAndDrop="false" >
+            <ScheduleEvents TValue="AppointmentData" EventRendered="OnEventRendered" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
+            <ScheduleEventSettings DataSource="@appointmentDatas" IgnoreWhitespace="false" AllowDeleting="false" EnableTooltip>
+                <TooltipTemplate>
+                    @{
+                        var eventData = (context as AppointmentData);
+                        <div class="tooltip-wrap">
+                            <div class="content-area">
+                                <div class="name">@eventData!.Subject</div>
+                                <div class="time">Created At : @eventData.CreateTime.ToString("dd.MM.yyyy")</div>
+                                <div class="time">Status      : @eventData.Status</div>
+                            </div>
+                        </div>
+                    }
+                </TooltipTemplate>
+            </ScheduleEventSettings>
             <ScheduleViews>
                 <ScheduleView Option="View.Month" MaxEventsPerRow="4" ShowWeekend="false"></ScheduleView>
                 <ScheduleView Option="View.MonthAgenda" ShowWeekend="false"></ScheduleView>
                 <ScheduleView Option="View.Year"></ScheduleView>
+                <ScheduleView Option="View.Agenda"></ScheduleView>
             </ScheduleViews>
         </SfSchedule>
     </div>
@@ -32,12 +47,38 @@
         padding: 0 !important;
     }
 
+    .e-schedule .e-text-center {
+        text-align: left;
+    }
+
+    .e-schedule-event-tooltip .tooltip-wrap {
+        display: flex;
+        align-items: center;
+    }
+
+        .e-schedule-event-tooltip .tooltip-wrap .image {
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 50px;
+            height: 50px;
+        }
+
+    e-schedule-event-tooltip .tooltip-wrap .content-area {
+        padding-left: 6px;
+        font-size: 12px;
+    }
+
+    .e-schedule-event-tooltip .tooltip-wrap .name {
+        font-size: 14px;
+    }
+
 </style>
 
- @code {
+@code {
 
-    DateTime CurrentDate = new DateTime(2020, 1, 6);
-
+    SfSchedule<AppointmentData> ScheduleRef = new();
+    SfTreeView<KanbanCardDto> TreeViewRef = new();
     private List<KanbanCardDto> kanbanCards = new();
     private List<AppointmentData> appointmentDatas = new();
     List<KanbanCardDto> unscheduledCards = new();
@@ -62,6 +103,7 @@
                                 Id = kanban.Id,
                                 Title = kanban.Title,
                                 Summary = kanban.Summary,
+                                CreatedDate = kanban.CreatedDate,
                                 EstimatedEndDate = kanban.EstimatedEndDate,
                                 ProjectId = kanban.ProjectId,
                                 ProjectTitle = kanban.ProjectTitle,
@@ -75,23 +117,33 @@
                 }
             }
         }
-        unscheduledCards = kanbanCards.Where(x => x.EstimatedEndDate.ToString("dd.MM.yyyy").Equals("01.01.0001")).ToList();
-        foreach (var appointment in kanbanCards.Where(x => !x.EstimatedEndDate.ToString("dd.MM.yyyy").Equals("01.01.0001")).ToList())
+
+        unscheduledCards = kanbanCards.Where(x => x.EstimatedEndDate.ToString("dd.MM.yyyy").Equals("01.01.0001") && !x.Status!.Equals("Close")).ToList();
+        foreach (var appointment in kanbanCards.Where(x => !x.EstimatedEndDate.ToString("dd.MM.yyyy").Equals("01.01.0001") && !x.Status!.Equals("Close")).ToList())
         {
+            string color = string.Empty;
+            if (appointment.Status == "InProgress")
+            {
+                color = "#557A46";
+            }
+            if (appointment.Status == "Testing")
+            {
+                color = "#C23373";
+            }
             appointmentDatas.Add(new AppointmentData
                 {
 
                     Id = appointment.Id,
                     Subject = appointment.Summary!,
                     IsAllDay = true,
+                    CreateTime = appointment.CreatedDate,
                     StartTime = appointment.EstimatedEndDate,
-                    EndTime = appointment.EstimatedEndDate
+                    EndTime = appointment.EstimatedEndDate,
+                    CategoryColor = color,
+                    Status = appointment.Status!
                 });
         }
     }
-
-    SfSchedule<AppointmentData> ScheduleRef = new();
-    SfTreeView<KanbanCardDto> TreeViewRef = new();
 
     async Task DragStop(DragAndDropEventArgs args)
     {
@@ -108,15 +160,15 @@
                     StartTime = cellData.StartTime,
                     EndTime = cellData.EndTime,
                 };
-            
+
 
             // update kanban card EstimatedEndDate
             KanbanCardDto updatedKanbanCard = unscheduledCards.Where(x => x.Id.Equals(Convert.ToInt32(args.DraggedNodeData.Id))).First();
             updatedKanbanCard.EstimatedEndDate = cellData.StartTime;
             var json = JsonConvert.SerializeObject(updatedKanbanCard);
-            var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json"); 
+            var content = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             var result = await httpClient.PutAsync("api/Kanban/UpdateEstimatedEndDate", content);
-            if(result.IsSuccessStatusCode)
+            if (result.IsSuccessStatusCode)
             {
                 await ScheduleRef.AddEventAsync(eventData);
                 TreeViewRef.RemoveNodes(new string[] { args.DraggedNodeData.Id });
@@ -124,11 +176,29 @@
         }
     }
 
+
+    public void OnPopupOpen(PopupOpenEventArgs<AppointmentData> args)
+    {
+        if (args.Type == PopupType.Editor || args.Type == PopupType.QuickInfo)
+        {
+            args.Cancel = true;
+        }
+    }
+
+    public void OnEventRendered(EventRenderedArgs<AppointmentData> args)
+    {
+        //Here you can customize with your code
+        Dictionary<string, object> attributes = new Dictionary<string, object>();
+        attributes.Add("style", "background: " + args.Data.CategoryColor);
+        args.Attributes = attributes;
+    }
+
     public class AppointmentData
     {
         public int Id { get; set; }
         public string Subject { get; set; }
         public string Location { get; set; }
+        public DateTime CreateTime { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string Description { get; set; }
@@ -136,6 +206,8 @@
         public string RecurrenceRule { get; set; }
         public string RecurrenceException { get; set; }
         public Nullable<int> RecurrenceID { get; set; }
+        public string CategoryColor { get; set; }
+        public string Status { get; set; }
     }
 
 }
