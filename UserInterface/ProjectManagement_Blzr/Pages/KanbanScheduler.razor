@@ -2,41 +2,45 @@
 @using System.Text;
 @inject HttpClient httpClient
 
-<div class="row">
-    <div class="col-lg-2">
-        <h4>Not Scheduled Cards</h4>
-        <SfTreeView @ref="TreeViewRef" TValue="KanbanCardDto" AllowDragAndDrop AllowTextWrap>
-            <TreeViewFieldsSettings DataSource="@unscheduledCards" Id="Id" Text="Summary" IconCss="e-icons e-plus"></TreeViewFieldsSettings>
-            <TreeViewEvents TValue="KanbanCardDto" OnNodeDragStop="DragStop"></TreeViewEvents>
-        </SfTreeView>
-    </div>
-    <div class="col-lg-10 e-droppable">
-        <SfSchedule @ref="ScheduleRef" TValue="AppointmentData" Height="calc(100vh - 4.75rem)" AllowDragAndDrop="false" >
-            <ScheduleEvents TValue="AppointmentData" EventRendered="OnEventRendered" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
-            <ScheduleEventSettings DataSource="@appointmentDatas" IgnoreWhitespace="false" AllowDeleting="false" EnableTooltip>
-                <TooltipTemplate>
-                    @{
-                        var eventData = (context as AppointmentData);
-                        <div class="tooltip-wrap">
-                            <div class="content-area">
-                                <div class="name">@eventData!.Subject</div>
-                                <div class="time">Created At : @eventData.CreateTime.ToString("dd.MM.yyyy")</div>
-                                <div class="time">Status      : @eventData.Status</div>
+@if (appointmentDatas.Count > 0)
+{
+    <div class="row">
+        <div class="col-lg-2">
+            <h4>Not Scheduled Cards</h4>
+            <SfTreeView @ref="TreeViewRef" TValue="KanbanCardDto" AllowDragAndDrop AllowTextWrap>
+             <TreeViewFieldsSettings DataSource="@unscheduledCards" Id="Id" Text="Summary" IconCss="e-icons e-plus"></TreeViewFieldsSettings>
+             <TreeViewEvents TValue="KanbanCardDto" OnNodeDragStop="DragStop"></TreeViewEvents>
+         </SfTreeView>
+     </div>
+     <div class="col-lg-10 e-droppable">
+         <SfSchedule @ref="ScheduleRef" TValue="AppointmentData" Height="calc(100vh - 4.75rem)" AllowDragAndDrop="false">
+             <ScheduleEvents TValue="AppointmentData" EventRendered="OnEventRendered" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
+             <ScheduleEventSettings DataSource="@appointmentDatas" IgnoreWhitespace="false" AllowDeleting="false" EnableTooltip>
+                 <TooltipTemplate>
+                     @{
+                            var eventData = (context as AppointmentData);
+                            <div class="tooltip-wrap">
+                                <div class="content-area">
+                                    <div class="name">@eventData!.Subject</div>
+                                    <div class="time">Created At : @eventData.CreateTime.ToString("dd.MM.yyyy")</div>
+                                    <div class="time">Status      : @eventData.Status</div>
+                                </div>
                             </div>
-                        </div>
-                    }
-                </TooltipTemplate>
-            </ScheduleEventSettings>
-            <ScheduleViews>
-                <ScheduleView Option="View.Month" MaxEventsPerRow="4" ShowWeekend="false"></ScheduleView>
-                <ScheduleView Option="View.MonthAgenda" ShowWeekend="false"></ScheduleView>
-                <ScheduleView Option="View.Year"></ScheduleView>
-                <ScheduleView Option="View.Agenda"></ScheduleView>
-            </ScheduleViews>
-        </SfSchedule>
-    </div>
-</div>
+                        }
+                    </TooltipTemplate>
+                </ScheduleEventSettings>
+                <ScheduleViews>
+                    <ScheduleView Option="View.Month" MaxEventsPerRow="4" ShowWeekend="false"></ScheduleView>
+                    <ScheduleView Option="View.MonthAgenda" ShowWeekend="false"></ScheduleView>
+                    <ScheduleView Option="View.Year"></ScheduleView>
+                    <ScheduleView Option="View.Agenda"></ScheduleView>
+                </ScheduleViews>
+            </SfSchedule>
 
+
+        </div>
+    </div>
+}
 <style>
     .e-treeview .e-text-content {
         padding: 0 !important;
