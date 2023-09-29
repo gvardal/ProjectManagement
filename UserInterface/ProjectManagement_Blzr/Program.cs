@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.ResponseCompression;
 using ProjectManagement_Blzr.Data;
 using ProjectManagement_Blzr.Extensions;
+using ProjectManagement_Blzr.Hubs;
 using Syncfusion.Blazor;
 
 namespace ProjectManagement_Blzr
@@ -20,6 +22,10 @@ namespace ProjectManagement_Blzr
             builder.Services.ConfigureSqlServer(builder.Configuration);
             builder.Services.ConfigureHttpClient(builder.Configuration);
 
+            builder.Services.AddResponseCompression(opt =>
+            {
+                opt.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/octet/stream" });
+            });
 
             var app = builder.Build();
 
@@ -37,6 +43,7 @@ namespace ProjectManagement_Blzr
             app.UseRouting();
             app.MapDefaultControllerRoute();
             app.MapBlazorHub();
+            app.MapHub<KanbanHub>("/kanbanhub");
             app.MapFallbackToPage("/_Host");
 
             app.Run();

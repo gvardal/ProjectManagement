@@ -7,7 +7,7 @@ namespace ProjectManagement_Blzr.Hubs
     {
         public Task ChangeStatus(KanbanCardDto kanbanCard)
         {
-            return Clients.All.SendAsync(method: "ChangedKanbanCard", kanbanCard);
+            return Clients.All.SendAsync(method: "ChangedKanbanCard", (kanbanCard));
         }
     }
 }
