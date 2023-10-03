@@ -2,10 +2,8 @@ version: '3.4'
 
 services:
   projectmanagement_api:
-    container_name: "ProjectManagement_API"
+    container_name: ProjectManagement_ApiService
     image: ${DOCKER_REGISTRY-}projectmanagementapi
-    ports:
-      - 5002:80
     build:
       context: .
       dockerfile: ApiManagement/ProjectManagement_Api/Dockerfile
