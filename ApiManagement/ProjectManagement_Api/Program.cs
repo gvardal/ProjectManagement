@@ -22,6 +22,7 @@ namespace ProjectManagement_Api
             builder.Services.ConfigureSqlContext(builder.Configuration);
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
+            builder.Services.ConfigureConsul(builder.Configuration);
 
             var app = builder.Build();
 
@@ -38,6 +39,8 @@ namespace ProjectManagement_Api
 
 
             app.MapControllers();
+
+            app.RegisterWtihConsul();
 
             app.Run();
         }

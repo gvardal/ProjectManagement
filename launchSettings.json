@@ -4,7 +4,8 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "projectmanagement_api": "StartDebugging"
+        "projectmanagement_api": "StartDebugging",
+        "hangfireserver": "StartDebugging"
       }
     }
   }

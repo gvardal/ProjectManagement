@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentatio
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A1B7062D-2CB2-46D9-982E-8CEC7413582C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SystemManagement", "SystemManagement", "{1C2BFD43-7B9E-44A3-B7EC-F6380836F447}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangfireServer", "SystemManagement\HangfireServer\HangfireServer.csproj", "{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,10 @@ Global
 		{A1B7062D-2CB2-46D9-982E-8CEC7413582C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B7062D-2CB2-46D9-982E-8CEC7413582C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B7062D-2CB2-46D9-982E-8CEC7413582C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,7 @@ Global
 		{5AA0379F-F0B0-4F4A-AB91-2B030669E0A2} = {C5927097-1951-40DC-9D29-6202D4518D74}
 		{01E947FC-9DA7-4F2B-92D3-A7E0C7A27A51} = {F729BC4B-0C43-42C0-8ADE-FC4B227A180C}
 		{59D143D2-30F4-49B5-8E54-9C323D650AEF} = {F729BC4B-0C43-42C0-8ADE-FC4B227A180C}
+		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB} = {1C2BFD43-7B9E-44A3-B7EC-F6380836F447}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6E61491C-F6F4-4FF8-8F0D-DBCBE304F8B1}
