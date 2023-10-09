@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Configuration;
 using ProjectManagement_Blzr.Data;
 using ProjectManagement_Blzr.Extensions;
 using ProjectManagement_Blzr.Hubs;
-using Serilog;
 using Syncfusion.Blazor;
 
 namespace ProjectManagement_Blzr
@@ -20,6 +18,7 @@ namespace ProjectManagement_Blzr
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddSyncfusionBlazor();
+            builder.Logging.ClearProviders();
 
 
             // Custom Service Extensions
@@ -27,7 +26,7 @@ namespace ProjectManagement_Blzr
             builder.Services.ConfigureHttpClient(builder.Configuration);
             builder.Services.SetUpGrayLog();
 
-            
+
 
             builder.Services.AddResponseCompression(opt =>
             {
@@ -44,8 +43,8 @@ namespace ProjectManagement_Blzr
                 app.UseExceptionHandler("/Error");
             }
 
-            
-            
+
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -53,7 +52,7 @@ namespace ProjectManagement_Blzr
             app.MapBlazorHub();
             app.MapHub<KanbanHub>("/kanbanhub");
             app.MapFallbackToPage("/_Host");
-            
+
             app.Run();
         }
     }
