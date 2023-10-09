@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HangfireServer.Pages
 {
@@ -14,7 +13,10 @@ namespace HangfireServer.Pages
 
         public void OnGet()
         {
-
+            _logger.LogTrace(" -> Get Method is called");
+            _logger.LogDebug("-> Get Method is called");
+            _logger.LogInformation(" -> Get Method is called");
+            _logger.LogWarning("-> Get Method is called");
         }
     }
 }

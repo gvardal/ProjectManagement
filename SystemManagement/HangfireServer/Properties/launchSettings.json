@@ -7,8 +7,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "launchUrl": "hangfire",
-      "applicationUrl": "http://localhost:5000"
+      "launchUrl": "",
+      "applicationUrl": "http://localhost:5005"
       
     },
     "IIS Express": {

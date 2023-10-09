@@ -29,7 +29,9 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SystemManagement", "SystemManagement", "{1C2BFD43-7B9E-44A3-B7EC-F6380836F447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangfireServer", "SystemManagement\HangfireServer\HangfireServer.csproj", "{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HangfireServer", "SystemManagement\HangfireServer\HangfireServer.csproj", "{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraylogClient", "SystemManagement\GraylogClient\GraylogClient.csproj", "{54099D00-67C4-40D6-855F-47454177B9D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54099D00-67C4-40D6-855F-47454177B9D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54099D00-67C4-40D6-855F-47454177B9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54099D00-67C4-40D6-855F-47454177B9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54099D00-67C4-40D6-855F-47454177B9D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{01E947FC-9DA7-4F2B-92D3-A7E0C7A27A51} = {F729BC4B-0C43-42C0-8ADE-FC4B227A180C}
 		{59D143D2-30F4-49B5-8E54-9C323D650AEF} = {F729BC4B-0C43-42C0-8ADE-FC4B227A180C}
 		{EBA88FAD-E931-4FAF-9BDF-FD890DC690DB} = {1C2BFD43-7B9E-44A3-B7EC-F6380836F447}
+		{54099D00-67C4-40D6-855F-47454177B9D8} = {1C2BFD43-7B9E-44A3-B7EC-F6380836F447}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6E61491C-F6F4-4FF8-8F0D-DBCBE304F8B1}

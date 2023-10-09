@@ -2,7 +2,6 @@ using Hangfire;
 using HangfireServer.Context;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace HangfireServer
 {
     public class Program
