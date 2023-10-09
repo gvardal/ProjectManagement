@@ -37,7 +37,6 @@ namespace ProjectManagement_Api
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.RegisterWtihConsul();

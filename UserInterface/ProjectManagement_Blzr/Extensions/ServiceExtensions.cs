@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting.Internal;
 using ProjectManagement_Blzr.Models;
-using System.Runtime.CompilerServices;
+using Serilog;
 
 namespace ProjectManagement_Blzr.Extensions
 {
@@ -18,6 +17,22 @@ namespace ProjectManagement_Blzr.Extensions
         public static void ConfigureHttpClient(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(configuration["ApiUrl"]!) });
+        }
+
+        public static void SetUpGrayLog(this IServiceCollection services)
+        {
+            var serilogConfig = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("serilog.json")
+                .AddEnvironmentVariables()
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(serilogConfig)
+                .CreateLogger();
+
+            Log.Information("Starting Blazor application");
+
         }
     }
 }

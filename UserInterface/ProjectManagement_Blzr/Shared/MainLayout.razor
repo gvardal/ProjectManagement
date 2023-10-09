@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Serilog;
+@inherits LayoutComponentBase
 @inject NavigationManager navigationManager
 
 <PageTitle>©GV</PageTitle>
@@ -64,4 +65,5 @@
     {
         navigationManager.NavigateTo("");
     }
+
 }

@@ -1,0 +1,35 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Graylog", "Serilog.Sinks.Console" ],
+    "MinimumLevel": "Information",
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "{Timestamp:HH:mm:ss} [{Level}] {SourceContext}{NewLine}{Message}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "Graylog",
+        "Args": {
+          "hostnameOrAddress": "127.0.0.1",
+          "port": "12201",
+          "transportType": "Udp",
+          "facility": "ProjectManagement"
+        }
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "Path": "./logs/log.txt",
+          "IncludeScopes": true,
+          "TimestampFormat": "yyyy-MM-dd HH:mm:ss",
+          "RollingInterval": "Day"
+        }
+      }
+    ],
+    "Properties": {
+      "Application": "Project Management UI"
+    }
+  }
+}
