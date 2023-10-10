@@ -1,7 +1,17 @@
 version: '3.8'
 
 services:
-
+  s_rabbitmq:
+    container_name: RabbitMQ
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=giray
+      - RABBITMQ_DEFAULT_PASS=123
 
   s_consul:
     container_name: Consul
@@ -72,7 +82,7 @@ services:
       GRAYLOG_MONGODB_URI: "mongodb://mongodb:27017/graylog"
     entrypoint: /usr/bin/tini -- wait-for-it opensearch:9200 -- /docker-entrypoint.sh
     volumes:
-      - "${PWD}/config/graylog/graylog.conf:/usr/share/graylog/config/graylog.conf"
+      - "graylog_config:/config/graylog/graylog.conf:/usr/share/graylog/config/graylog.conf"
       - "graylog_data:/usr/share/graylog/data"
     networks:
       - graynet
@@ -95,6 +105,10 @@ volumes:
   log_data:
     driver: local
   graylog_data:
+    driver: local
+  graylog_config:
+    driver: local
+  rabbitmq_data:
     driver: local
 
 networks:
