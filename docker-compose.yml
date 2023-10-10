@@ -23,7 +23,8 @@ services:
       - ./data:/var/opt/mssql/data
       - ./log:/var/opt/mssql/log
       - ./secrets:/var/opt/mssql/secrets
-
+    networks:
+      - sqlnet
 
   s_mongo:
     image: mongo:6.0.5-jammy
@@ -88,16 +89,6 @@ services:
       - 12201:12201/tcp
       - 12201:12201/udp
 
-  projectmanagement_api:
-    container_name: ProjectManagement_ApiService
-    image: ${DOCKER_REGISTRY-}projectmanagementapi
-    build:
-      context: .
-      dockerfile: ApiManagement/ProjectManagement_Api/Dockerfile
-    ports:
-     - 5002:80
-
-
 volumes:
   mongo_data:
     driver: local
@@ -109,7 +100,8 @@ volumes:
 networks:
   graynet:
     driver: bridge
-
+  sqlnet:
+    driver: bridge
     
     
 

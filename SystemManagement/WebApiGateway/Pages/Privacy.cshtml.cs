@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HangfireServer.Pages
+namespace WebApiGateway.Pages
 {
     public class PrivacyModel : PageModel
     {

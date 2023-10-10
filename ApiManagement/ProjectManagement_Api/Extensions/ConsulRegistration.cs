@@ -1,8 +1,6 @@
 ﻿using Consul;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.Hosting.Internal;
-using static System.Collections.Specialized.BitVector32;
 
 namespace ProjectManagement_Api.Extensions
 {
@@ -10,13 +8,13 @@ namespace ProjectManagement_Api.Extensions
     {
         public static IServiceCollection ConfigureConsul(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig => 
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
             {
                 var address = configuration["ConsulConfig:Address"];
                 if (address != null)
                 {
                     consulConfig.Address = new Uri(address);
-                }                
+                }
             }));
             return services;
         }
@@ -35,7 +33,7 @@ namespace ProjectManagement_Api.Extensions
                     var registration = new AgentServiceRegistration()
                     {
                         ID = $"ProjectManagerApiService",
-                        Name = "Project Manager Api Service",
+                        Name = "ProjectManagerApiService",
                         Address = $"{uri.Host}",
                         Port = uri.Port,
                         Tags = new[] { "Project Manager Api", "Project Manager" }
@@ -51,8 +49,8 @@ namespace ProjectManagement_Api.Extensions
                     //    });
                     //}                    
                 }
-            }            
-            return app;            
+            }
+            return app;
         }
     }
 }
