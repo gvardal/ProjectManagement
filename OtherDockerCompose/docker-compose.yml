@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  s_gitlab:
+    image: gitlab/gitlab-ce
+    container_name: GitLab
+    restart: always
+    shm_size: 2gb
+    ports:
+      - 8080:80
+      - 1443:443
+      - 2222:22
+    volumes:
+      - gitlab_config:/etc/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_data:/var/opt/gitlab
+
+volumes:
+  gitlab_config:
+    driver: local
+  gitlab_logs:
+    driver: local
+  gitlab_data:
+    driver: local

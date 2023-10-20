@@ -32,7 +32,7 @@ namespace ProjectManagement_Api
             var app = builder.Build();
 
             var eventBus = app.Services.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
+            //eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
 
 
             // Configure the HTTP request pipeline.

@@ -36,8 +36,8 @@ namespace ProjectManagement_Api.Extensions
                 RabbitMQConfig config = new RabbitMQConfig()
                 {
                     ConnectionRetryCount = 5,
-                    ExchangeName = "SellingBuddy",
-                    ClientAppName = "UnitTest",
+                    ExchangeName = "ProjectManagement",
+                    ClientAppName = "ProjectManagement.Api",
                     EventNameSuffix = "IntegrationEvent",
                 };
                 return EventBusFactory.Create(config, sp);

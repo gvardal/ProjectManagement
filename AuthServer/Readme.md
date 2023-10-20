@@ -1,0 +1,1 @@
+This is Authentication Server project for general purpose.

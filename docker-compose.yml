@@ -25,7 +25,7 @@ services:
     container_name: MsSQLServer
     image: mcr.microsoft.com/mssql/server:2019-latest
     ports:
-    - "5001:1433"
+    - "5002:1433"
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Gv973041*
@@ -99,6 +99,15 @@ services:
       - 12201:12201/tcp
       - 12201:12201/udp
 
+  # s_identityservice:
+  #   container_name: IdentityService
+  #   image: girayvardal/identityservice
+  #   ports:
+  #     - 5003:80
+  #   networks:
+  #     - sqlnet
+
+
 volumes:
   mongo_data:
     driver: local
@@ -110,6 +119,8 @@ volumes:
     driver: local
   rabbitmq_data:
     driver: local
+
+
 
 networks:
   graynet:
